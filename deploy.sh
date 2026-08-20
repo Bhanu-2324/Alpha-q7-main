@@ -23,9 +23,17 @@ cd "$PROJECT_DIR/backend/server"
 
 npm install
 
-echo "Restarting backend..."
+echo "Starting or restarting backend..."
 
-pm2 restart alpha-q7-backend || pm2 restart alpha-backend
+cd "$PROJECT_DIR/backend/server/src"
+
+if pm2 describe alpha-q7-backend > /dev/null 2>&1; then
+    echo "Backend already exists. Restarting..."
+    pm2 restart alpha-q7-backend
+else
+    echo "Backend not found. Starting new PM2 process..."
+    pm2 start server.js --name alpha-q7-backend
+fi
 
 echo "Checking Nginx..."
 
