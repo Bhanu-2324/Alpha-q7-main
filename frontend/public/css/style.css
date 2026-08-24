@@ -3234,3 +3234,898 @@ a {
         width: calc(100% - 28px) !important;
     }
 }
+
+/* =========================================================
+   COURSE DETAILS MODAL
+   Matches the brochure popup exactly in behavior:
+   fixed viewport, centered, overlay, no page reflow.
+   ========================================================= */
+
+body.course-details-modal-open {
+    overflow: hidden;
+}
+
+.course-details-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.course-details-modal[hidden] {
+    display: none !important;
+}
+
+.course-details-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.course-details-modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 720px);
+    max-height: min(90vh, 800px);
+    overflow-y: auto;
+    padding: 34px 36px 30px;
+    border: 1px solid rgba(214, 168, 48, 0.5);
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(18, 14, 7, 0.97), rgba(9, 10, 12, 0.95));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 25px 70px rgba(0,0,0,.55);
+    opacity: 0;
+    transform: scale(.95) translateY(-20px);
+    transition: opacity .22s ease, transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+
+.course-details-modal.is-open .course-details-modal-card {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.course-details-modal-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.course-details-modal-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.course-details-modal-card::-webkit-scrollbar-thumb {
+    background: rgba(214,168,48,.45);
+    border-radius: 10px;
+}
+
+.course-details-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(214,168,48,.3);
+    border-radius: 50%;
+    background: rgba(247,214,106,.08);
+    color: #f4d03f;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-details-close:hover {
+    background: rgba(247,214,106,.15);
+    border-color: rgba(214,168,48,.6);
+    transform: rotate(90deg);
+}
+
+.course-details-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-right: 48px;
+}
+
+.course-details-icon {
+    width: 62px;
+    height: 62px;
+    min-width: 62px;
+    display: grid;
+    place-items: center;
+    border-radius: 17px;
+    background: linear-gradient(145deg,#fff3bb,#e1a222 54%,#f8d86d);
+    color: #1e1609;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.course-details-heading > span {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #f4d03f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.course-details-heading h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 31px;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+}
+
+.course-details-heading p {
+    margin: 7px 0 0;
+    color: #d8d4c8;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.course-details-rule {
+    height: 1px;
+    margin: 24px 0 2px;
+    background: linear-gradient(90deg, rgba(214,168,48,.42), rgba(214,168,48,.08), transparent);
+}
+
+.course-details-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 28px;
+}
+
+.course-details-body section {
+    padding-top: 18px;
+}
+
+.course-details-body section:nth-child(1),
+.course-details-body section:nth-child(2) {
+    grid-column: 1 / -1;
+}
+
+.course-details-body h3 {
+    margin: 0 0 7px;
+    color: #f4d03f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .11em;
+    line-height: 1.4;
+}
+
+.course-details-body p {
+    margin: 0;
+    color: #d8d4c8;
+    font-size: 13px;
+    line-height: 1.58;
+}
+
+.course-details-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 18px;
+}
+
+.course-details-benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: #d8d4c8;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.course-details-benefit > span:first-child {
+    color: #e9c65b;
+    font-weight: 800;
+    flex: 0 0 auto;
+}
+
+.course-details-footer {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(214,168,48,.2);
+    display: flex;
+    justify-content: center;
+}
+
+.course-details-learn-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 190px;
+    height: 48px;
+    padding: 0 24px;
+    border: 1px solid rgba(255,226,132,.45);
+    border-radius: 9px;
+    background: linear-gradient(120deg,#d29a17,#fbdc6c 48%,#c47f0d);
+    color: #1b1207 !important;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    box-shadow: 0 8px 22px rgba(247,200,75,.24);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.course-details-learn-more:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(120deg,#efb739,#ffe8a4 48%,#d79317);
+    box-shadow: 0 12px 30px rgba(247,200,75,.34);
+}
+
+.course-details-learn-more span {
+    font-size: 17px;
+    transition: transform .2s ease;
+}
+
+.course-details-learn-more:hover span {
+    transform: translateX(4px);
+}
+
+@media (max-width: 700px) {
+    .course-details-modal {
+        padding: 14px;
+    }
+
+    .course-details-modal-card {
+        width: 100%;
+        max-height: 92vh;
+        padding: 26px 20px 24px;
+        border-radius: 20px;
+    }
+
+    .course-details-header {
+        gap: 13px;
+        padding-right: 42px;
+    }
+
+    .course-details-icon {
+        width: 52px;
+        min-width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        font-size: 20px;
+    }
+
+    .course-details-heading h2 {
+        font-size: 25px;
+    }
+
+    .course-details-heading p {
+        font-size: 12px;
+    }
+
+    .course-details-body {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .course-details-body section:nth-child(1),
+    .course-details-body section:nth-child(2) {
+        grid-column: auto;
+    }
+
+    .course-details-benefits {
+        grid-template-columns: 1fr;
+        gap: 7px;
+    }
+
+    .course-details-body p,
+    .course-details-benefit {
+        font-size: 12px;
+    }
+
+    .course-details-learn-more {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .course-details-modal-card,
+    .course-details-close,
+    .course-details-learn-more,
+    .course-details-learn-more span {
+        transition: none !important;
+    }
+}
+
+/* =========================================================
+   FINAL FAQ LAYOUT
+   TOP: GLOSSY GOLD WHY ALPHA Q7
+   BELOW: THREE INDEPENDENT LEFT + THREE INDEPENDENT RIGHT
+========================================================= */
+.faq-container {
+    width: min(100%, 1280px);
+    max-width: 1280px !important;
+}
+
+.faq-list {
+    width: 100%;
+    margin: 46px auto 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+        "center center"
+        "left right";
+    column-gap: 34px;
+    align-items: start;
+}
+
+/* =========================================================
+   TOP CENTER GOLD CARD
+========================================================= */
+.faq-center-wrap {
+    grid-area: center;
+    width: min(560px, 100%);
+    justify-self: center;
+    margin: 0 auto 38px;
+    position: relative;
+}
+
+.faq-center-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: linear-gradient(
+        120deg,
+        transparent 12%,
+        rgba(255, 239, 160, .16) 34%,
+        rgba(255, 220, 100, .78) 50%,
+        rgba(255, 239, 160, .16) 66%,
+        transparent 88%
+    );
+    background-size: 220% 100%;
+    animation: faqGoldShine 4.2s linear infinite;
+    filter: blur(1px);
+    opacity: .72;
+    pointer-events: none;
+}
+
+.faq-center-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 15px;
+    background: radial-gradient(
+        ellipse at 50% 0%,
+        rgba(255, 226, 117, .14),
+        transparent 65%
+    );
+    pointer-events: none;
+}
+
+@keyframes faqGoldShine {
+    from { background-position: 180% 0; }
+    to { background-position: -80% 0; }
+}
+
+.faq-column-left {
+    grid-area: left;
+}
+
+.faq-column-right {
+    grid-area: right;
+}
+
+.faq-column {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+/* =========================================================
+   FAQ CARDS
+========================================================= */
+.faq-item {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    min-height: 92px;
+    height: max-content;
+    margin: 0;
+    align-self: flex-start;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid rgba(247, 209, 92, .18) !important;
+    border-radius: 16px !important;
+    background: linear-gradient(
+        145deg,
+        rgba(26,25,22,.98),
+        rgba(10,11,12,.98)
+    ) !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,.20) !important;
+    transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.faq-item:hover {
+    border-color: rgba(247, 209, 92, .48) !important;
+}
+
+.faq-item[open]:not(.faq-center) {
+    border-color: rgba(247, 209, 92, .55) !important;
+}
+
+/* =========================================================
+   QUESTION
+========================================================= */
+.faq-question {
+    position: relative;
+    width: 100%;
+    min-height: 92px;
+    padding: 0 54px 0 26px !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    gap: 12px;
+    color: #fff !important;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: left;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.faq-question::-webkit-details-marker {
+    display: none;
+}
+
+.faq-question::marker {
+    display: none;
+    content: "";
+}
+
+.faq-question-text {
+    display: block;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-wrap: anywhere;
+}
+
+/* One and only one icon. */
+.faq-icon {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFE89B !important;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* =========================================================
+   GLOSSY GOLD WHY ALPHA Q7
+========================================================= */
+.faq-center-wrap .faq-item.faq-center {
+    position: relative;
+    z-index: 1;
+    min-height: 104px;
+    border: 1px solid #e6bb45 !important;
+    border-radius: 17px !important;
+    background:
+        radial-gradient(
+            ellipse at 50% -25%,
+            rgba(255, 235, 145, .28),
+            transparent 58%
+        ),
+        linear-gradient(
+            135deg,
+            #3a2b0d 0%,
+            #20190c 46%,
+            #33270d 100%
+        ) !important;
+    box-shadow:
+        0 0 0 1px rgba(255, 226, 112, .08) inset,
+        0 14px 42px rgba(190, 145, 38, .16),
+        0 0 32px rgba(224, 177, 59, .09) !important;
+}
+
+.faq-center-wrap .faq-center::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -55%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent,
+        rgba(255,255,255,.22),
+        transparent
+    );
+    transform: skewX(-18deg);
+    animation: faqCenterGloss 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes faqCenterGloss {
+    0%, 58% { left: -55%; }
+    82%, 100% { left: 115%; }
+}
+
+.faq-center-wrap .faq-center .faq-question {
+    min-height: 104px;
+    justify-content: center;
+    padding: 0 54px !important;
+    text-align: center;
+    color: #ffe18a !important;
+}
+
+.faq-center-wrap .faq-center .faq-question-text {
+    flex: 0 1 auto;
+    text-align: center;
+    color: #ffe18a !important;
+    letter-spacing: .01em;
+}
+
+.faq-center-wrap .faq-center .faq-icon {
+    right: 24px;
+    color: #ffe18a !important;
+}
+
+.faq-center-wrap .faq-center[open] {
+    border-color: #f0c94f !important;
+}
+
+/* =========================================================
+   ANSWER — NO SEPARATOR LINE
+========================================================= */
+.faq-answer {
+    margin: 0;
+    padding: 0 26px 25px !important;
+    border: none !important;
+    color: #fff !important;
+    background: transparent !important;
+    font-size: 14px;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+    box-shadow: none !important;
+}
+
+.faq-center-wrap .faq-center .faq-answer {
+    color: #f0e3c1 !important;
+    border: none !important;
+}
+
+.faq-item:not([open]) .faq-answer {
+    display: none;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+@media (max-width: 900px) {
+    .faq-list {
+        column-gap: 20px;
+    }
+
+    .faq-center-wrap {
+        width: min(540px, 100%);
+        margin-bottom: 28px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+@media (max-width: 700px) {
+    .faq-container {
+        width: min(92%, 1280px);
+    }
+
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 34px;
+    }
+
+    .faq-center-wrap {
+        width: 100%;
+        margin: 0 0 14px;
+    }
+
+    .faq-column {
+        gap: 12px;
+    }
+
+    .faq-center-wrap .faq-center,
+    .faq-center-wrap .faq-center .faq-question {
+        min-height: 82px;
+    }
+
+    .faq-question {
+        min-height: 76px;
+        padding: 0 48px 0 20px !important;
+        font-size: 15px;
+    }
+
+    .faq-center-wrap .faq-center .faq-question {
+        padding: 0 48px 0 20px !important;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .faq-center-wrap .faq-center .faq-question-text {
+        text-align: center;
+    }
+
+    .faq-icon,
+    .faq-center-wrap .faq-center .faq-icon {
+        right: 18px;
+    }
+
+    .faq-answer {
+        padding: 0 20px 20px !important;
+        font-size: 13px;
+    }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+@media (max-width: 420px) {
+    .faq-question {
+        min-height: 70px;
+        padding: 0 44px 0 16px !important;
+        font-size: 14px;
+    }
+
+    .faq-center-wrap .faq-center .faq-question {
+        min-height: 76px;
+        padding: 0 44px 0 16px !important;
+    }
+
+    .faq-icon,
+    .faq-center-wrap .faq-center .faq-icon {
+        right: 15px;
+    }
+
+    .faq-answer {
+        padding: 0 16px 18px !important;
+        font-size: 12.5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq-center-wrap::before,
+    .faq-center-wrap .faq-center::before {
+        animation: none;
+    }
+}
+
+
+/* =========================================================
+   FINAL FAQ OVERRIDE — SINGLE ICON / INDEPENDENT ACCORDION
+   This block intentionally comes LAST so older FAQ rules
+   cannot generate a second + / - icon or separator line.
+========================================================= */
+
+/* Never generate FAQ symbols through pseudo-elements. */
+.faq-list summary::before,
+.faq-list summary::after,
+.faq-list details::before,
+.faq-list details::after,
+.faq-item::before,
+.faq-item::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* The JavaScript .faq-icon is the ONLY + / - symbol. */
+.faq-list .faq-icon {
+    position: absolute !important;
+    top: 50% !important;
+    right: 24px !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #FFE89B !important;
+    font-family: inherit !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+}
+
+/* No separator between question and answer. */
+.faq-list .faq-answer,
+.faq-list .faq-item[open] .faq-answer {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Keep the glossy gold WHY ALPHA Q7 card at the top center. */
+.faq-list .faq-center-wrap {
+    position: relative !important;
+    isolation: isolate !important;
+    z-index: 2 !important;
+}
+
+.faq-list .faq-center-wrap .faq-center {
+    position: relative !important;
+    z-index: 2 !important;
+    overflow: hidden !important;
+    background:
+        radial-gradient(
+            ellipse at 50% -35%,
+            rgba(255, 239, 160, .34),
+            transparent 58%
+        ),
+        linear-gradient(
+            135deg,
+            #4a370d 0%,
+            #2b210d 42%,
+            #3c2d0b 70%,
+            #241b09 100%
+        ) !important;
+    border: 1px solid #e8bf4b !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.10),
+        0 0 0 1px rgba(255,214,92,.08),
+        0 14px 44px rgba(195,148,32,.20),
+        0 0 36px rgba(230,184,60,.10) !important;
+}
+
+.faq-list .faq-center-wrap .faq-center::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: -60% !important;
+    width: 42% !important;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255,255,255,.05) 35%,
+        rgba(255,248,200,.34) 50%,
+        rgba(255,255,255,.05) 65%,
+        transparent 100%
+    ) !important;
+    transform: skewX(-18deg) !important;
+    animation: faqFinalGoldShine 4.5s ease-in-out infinite !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+.faq-list .faq-center-wrap .faq-center .faq-question,
+.faq-list .faq-center-wrap .faq-center .faq-question-text,
+.faq-list .faq-center-wrap .faq-center .faq-icon {
+    position: relative;
+    z-index: 1;
+}
+
+.faq-list .faq-center-wrap .faq-center .faq-question {
+    color: #FFE08A !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.faq-list .faq-center-wrap .faq-center .faq-question-text {
+    flex: 0 1 auto !important;
+    text-align: center !important;
+    color: #FFE08A !important;
+}
+
+.faq-list .faq-center-wrap .faq-center .faq-icon {
+    color: #FFE08A !important;
+}
+
+@keyframes faqFinalGoldShine {
+    0%, 55% {
+        left: -60%;
+        opacity: 0;
+    }
+    65% {
+        opacity: 1;
+    }
+    88%, 100% {
+        left: 125%;
+        opacity: 0;
+    }
+}
+
+/* Ensure only the clicked item expands; no grid-row stretching. */
+.faq-list {
+    align-items: start !important;
+}
+
+.faq-list > .faq-column,
+.faq-list > .faq-center-wrap {
+    align-self: start !important;
+}
+
+.faq-list > .faq-column {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+}
+
+.faq-list > .faq-column .faq-item {
+    align-self: flex-start !important;
+    height: max-content !important;
+}
+
+/* Mobile: center card first, then left/right questions stacked. */
+@media (max-width: 700px) {
+    .faq-list {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+
+    .faq-list > .faq-center-wrap,
+    .faq-list > .faq-column {
+        width: 100% !important;
+        align-self: stretch !important;
+    }
+
+    .faq-list > .faq-center-wrap {
+        margin-bottom: 14px !important;
+    }
+
+    .faq-list .faq-icon {
+        right: 16px !important;
+    }
+}
+/* =========================================
+   FAQ — SMALLER BOXES
+========================================= */
+
+.faq-item {
+    min-height: 70px !important;
+}
+
+.faq-question {
+    min-height: 70px !important;
+    padding: 0 20px !important;
+    font-size: 15px !important;
+}
+
+.faq-list {
+    gap: 14px !important;
+}
+
+/* Center WHY ALPHA Q7 box */
+.faq-item.faq-center {
+    min-height: 70px !important;
+}
+
+.faq-item.faq-center .faq-question {
+    min-height: 70px !important;
+}
+
+/* Answer spacing */
+.faq-answer {
+    padding: 0 20px 18px !important;
+    font-size: 13px !important;
+}
