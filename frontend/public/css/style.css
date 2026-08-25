@@ -211,11 +211,6 @@ img {
     background: #ffffff;
     box-shadow: 0 0 6px rgba(255,255,255,.8), inset 0 0 2px rgba(0,0,0,.2);
 }
-    animation:
-        livePulse
-        1.1s
-        infinite;
-}
 @keyframes livePulse {
     0%,
     100% {
@@ -4128,4 +4123,212 @@ body.course-details-modal-open {
 .faq-answer {
     padding: 0 20px 18px !important;
     font-size: 13px !important;
+}
+
+/* =========================================================
+   DEPLOYMENT / RESPONSIVE ALIGNMENT STABILIZER
+   Keep this block last: it normalizes the accumulated legacy
+   overrides above without changing the visual direction.
+========================================================= */
+
+:root {
+    --header-height: 82px;
+    --ticker-height: 48px;
+    --content-top-offset: calc(var(--header-height) + var(--ticker-height));
+}
+
+.site-header {
+    height: var(--header-height);
+}
+
+.nav-container {
+    height: var(--header-height);
+    min-height: var(--header-height);
+}
+
+.live-market-bar {
+    top: var(--header-height);
+    height: var(--ticker-height);
+}
+
+.market-status,
+.market-ticker,
+.alpha-q7-live-ticker {
+    height: var(--ticker-height);
+}
+
+.main-nav {
+    min-width: 0;
+}
+
+.stats-grid .stat-item span {
+    white-space: normal;
+    max-width: 100%;
+    text-align: center;
+}
+
+.hero-grid > *,
+.analysis-layout > *,
+.contact-grid > *,
+.footer-grid > * {
+    min-width: 0;
+}
+
+.hero-content,
+.masterclass-card,
+.analysis-content,
+.about-copy,
+.contact-copy,
+.contact-card {
+    min-width: 0;
+}
+
+.hero-content h1,
+.section-heading h2,
+.cta-container h2,
+.brochure-card h2 {
+    overflow-wrap: anywhere;
+}
+
+.custom-item p {
+    font-size: 13px !important;
+    color: var(--text-secondary) !important;
+}
+
+.custom-item p::after {
+    content: none !important;
+}
+
+.why-alpha-section > .container {
+    width: min(100%, 1280px);
+    max-width: 1280px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.why-alpha-section > .container > #whyAlphaContainer {
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .nav-container .main-nav {
+        gap: 10px;
+    }
+
+    .nav-container .main-nav > a:not(.nav-cta) {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 900px) {
+    :root {
+        --header-height: 72px;
+    }
+
+    .site-header,
+    .nav-container {
+        height: var(--header-height);
+        min-height: var(--header-height);
+    }
+
+    .live-market-bar {
+        top: var(--header-height);
+    }
+
+    .main-nav {
+        top: var(--header-height) !important;
+        max-height: calc(100vh - var(--header-height) - 16px);
+        overflow-y: auto;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-accordion {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow: visible;
+    }
+
+    .course-card {
+        min-width: 0;
+    }
+
+    .faq-list {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "center center"
+            "left right";
+    }
+}
+
+@media (max-width: 700px) {
+    .container {
+        width: min(92%, var(--container));
+    }
+
+    .hero-section {
+        padding-top: 140px;
+    }
+
+    .hero-markets,
+    .stats-grid,
+    .learn-grid,
+    .analysis-content,
+    .course-benefits-grid,
+    .course-accordion {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        width: 94%;
+    }
+
+    .stats-grid .stat-item {
+        min-width: 0;
+    }
+
+    .course-accordion {
+        overflow: visible;
+    }
+
+    .faq-list {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "center"
+            "left"
+            "right";
+        row-gap: 12px;
+    }
+
+    .faq-center-wrap {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: calc(100% - 24px);
+    }
+
+    .hero-section {
+        padding-top: 132px;
+    }
+
+    .stats-grid .stat-item span {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .footer-grid {
+        width: calc(100% - 24px);
+    }
 }
